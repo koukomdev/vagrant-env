@@ -1,0 +1,21 @@
+{
+  "name": "prepare",
+  "default_attributes": {},
+  "override_attributes": {},
+  "json_class": "Chef::Role",
+  "description": "",
+  "chef_type": "role",
+  "run_list":[
+    "recipe[vagrant_env::rbenv_homesick]",
+    "recipe[vagrant_env::zsh]",
+    "recipe[vagrant_env::screen]",
+    "recipe[vagrant_env::vim-proc]",
+    "recipe[vagrant_env::lv]",
+    "recipe[vagrant_env::tree]",
+    "recipe[vagrant_env::rbenv_bundler]",
+    "recipe[vagrant_env::rbenv_rails]",
+    "recipe[vagrant_env::nginx-rails]",
+    "recipe[vagrant_env::mysql-server]",
+    "recipe[vagrant_env::redis]"
+  ]
+}

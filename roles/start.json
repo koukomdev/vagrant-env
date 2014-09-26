@@ -1,5 +1,5 @@
 {
-  "name": "prepare",
+  "name": "start",
   "default_attributes": {},
   "override_attributes": {},
   "json_class": "Chef::Role",

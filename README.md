@@ -1,9 +1,9 @@
 vagrant_env
 ===========
 
-prepare vagrant environment
+prepare vagrant environment  
 
-とりあえずrailsが動く状態にする目的
+とりあえずrailsが動く状態にする目的  
 bundle vagrantは必要
 
 ruby 2.0.0だとberkshelfが動かない?  

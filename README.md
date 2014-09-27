@@ -6,8 +6,8 @@ prepare vagrant environment
 とりあえずrailsが動く状態にする目的
 bundle vagrantは必要
 
-ruby 2.0.0だとberkshelfが動かない?
-他の理由かも…
+ruby 2.0.0だとberkshelfが動かない?  
+他の理由かも…  
 
 $ bundle --path vendor/bundle  
 $ bundle exec berks install  

@@ -1,0 +1,20 @@
+<dataConfig>
+    <dataSource type="JdbcDataSource" driver="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://<%= @host %>:<%= @port %>/<%= @db %>"
+        user="<%= @user %>" password="<%= @pass %>" />
+    <document>
+        <entity name="genres" pk="id"
+            query="SELECT * FROM genres WHERE EXISTS(SELECT * FROM recipes INNER JOIN genres_recipes ON recipes.id = genres_recipes.recipe_id WHERE genres_recipes.genre_id = genres.id AND recipes.status = 1)"
+            deltaQuery="SELECT id FROM genres WHERE updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT') AND EXISTS(SELECT * FROM recipes INNER JOIN genres_recipes ON recipes.id = genres_recipes.recipe_id WHERE genres_recipes.genre_id = genres.id AND recipes.status = 1)"
+            deltaImportQuery="SELECT * FROM genres WHERE id = '${dataimporter.delta.id}'"
+            deletedPkQuery="SELECT * FROM genres WHERE NOT EXISTS(SELECT * FROM recipes INNER JOIN genres_recipes ON recipes.id = genres_recipes.recipe_id WHERE genres_recipes.genre_id = genres.id AND recipes.status = 1)">
+
+            <field column="id" name="genre_id" />
+            <field column="search_genre_1" name="genres_category_1" />
+            <field column="search_genre_2" name="genres_category_2" />
+            <field column="search_genre_3" name="genres_category_3" />
+            <field column="search_genre_4" name="genres_category_4" />
+            <field column="search_genre_5" name="genres_category_5" />
+        </entity>
+    </document>
+</dataConfig>

@@ -1,0 +1,20 @@
+<dataConfig>
+    <dataSource type="JdbcDataSource" driver="com.mysql.jdbc.Driver"
+        url="jdbc:mysql://<%= @host %>:<%= @port %>/<%= @db %>"
+        user="<%= @user %>" password="<%= @pass %>" />
+    <document>
+        <entity name="ingredients" pk="id"
+            query="SELECT * FROM ingredients WHERE EXISTS(SELECT * FROM recipes INNER JOIN ingredients_recipes ON recipes.id = ingredients_recipes.recipe_id WHERE ingredients_recipes.ingredient_id = ingredients.id AND recipes.status = 1)"
+            deltaQuery="SELECT id FROM ingredients WHERE updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT') AND EXISTS(SELECT * FROM recipes INNER JOIN ingredients_recipes ON recipes.id = ingredients_recipes.recipe_id WHERE ingredients_recipes.ingredient_id = ingredients.id AND recipes.status = 1)"
+            deltaImportQuery="SELECT * FROM ingredients WHERE id = '${dataimporter.delta.id}'"
+            deletedPkQuery="SELECT * FROM ingredients WHERE NOT EXISTS(SELECT * FROM recipes INNER JOIN ingredients_recipes ON recipes.id = ingredients_recipes.recipe_id WHERE ingredients_recipes.ingredient_id = ingredients.id AND recipes.status = 1)">
+
+            <field column="id" name="ingredient_id" />
+            <field column="search_category_1" name="ingredients_category_1" />
+            <field column="search_category_2" name="ingredients_category_2" />
+            <field column="search_category_3" name="ingredients_category_3" />
+            <field column="search_category_4" name="ingredients_category_4" />
+            <field column="search_category_5" name="ingredients_category_5" />
+        </entity>
+    </document>
+</dataConfig>

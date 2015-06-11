@@ -1,4 +1,4 @@
-include_recipe 'vagrant_env::yum-repos'
+include_recipe 'remi-env::yum-repos'
 
 # mysql-devel is necessary for "rails -d mysql"
 %w{mysql-server mysql-devel}.each do |pkg|

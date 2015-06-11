@@ -6,16 +6,19 @@
   "description": "",
   "chef_type": "role",
   "run_list":[
-    "recipe[vagrant_env::rbenv_homesick]",
-    "recipe[vagrant_env::zsh]",
-    "recipe[vagrant_env::screen]",
-    "recipe[vagrant_env::vim-proc]",
-    "recipe[vagrant_env::lv]",
-    "recipe[vagrant_env::tree]",
-    "recipe[vagrant_env::rbenv_bundler]",
-    "recipe[vagrant_env::rbenv_rails]",
-    "recipe[vagrant_env::nginx-rails]",
-    "recipe[vagrant_env::mysql-server]",
-    "recipe[vagrant_env::redis]"
+    "recipe[remi-env::rbenv_homesick]",
+    "recipe[remi-env::zsh]",
+    "recipe[remi-env::screen]",
+    "recipe[remi-env::vim-proc]",
+    "recipe[remi-env::lv]",
+    "recipe[remi-env::tree]",
+    "recipe[remi-env::rbenv_bundler]",
+    "recipe[remi-env::rbenv_rails]",
+    "recipe[remi-env::nginx-rails]",
+    "recipe[remi-env::mysql-server]",
+    "recipe[remi-env::image-magick]",
+    "recipe[remi-env::redis]",
+    "recipe[remi-env::prepare-solr]",
+    "recipe[remi-env::solr]"
   ]
 }

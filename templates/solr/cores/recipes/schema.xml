@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<schema name="solrbook" version="1.5">
+  <fields>
+    <!-- recipe -->
+    <field name="recipe_id"          type="int"     indexed="true" stored="true" required="true"/>
+    <field name="recipe_name"        type="text_ja" indexed="true" stored="true"/>
+    <field name="recipe_kana"        type="text_ja" indexed="true" stored="false"/>
+    <field name="recipe_description" type="text_ja" indexed="true" stored="true"/>
+    <field name="recipe_flow"        type="text_ja" indexed="true" stored="false" multiValued="true"/>
+    <field name="recipe_difficulty"  type="int"     indexed="true" stored="true"/>
+    <field name="recipe_timer"       type="int"     indexed="true" stored="true"/>
+    <field name="recipe_calory"      type="int"     indexed="true" stored="true"/>
+    <field name="recipe_popularity"  type="int"     indexed="true" stored="true"/>
+    <field name="recipe_timestamp"   type="int"     indexed="true" stored="true"/>
+
+    <!-- recipe_genre -->
+    <!-- ジャンルのツリー構造も一緒にインデクス化する -->
+    <field name="genres_categories" type="string" indexed="true" stored="false" multiValued="true"/>
+    <!-- leaf の名前(和食、とかの根っこ) -->
+    <field name="recipe_genre_name" type="string"  indexed="true" stored="false"  multiValued="true"/>
+    <field name="recipe_genre_kana" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+
+    <!-- ingredients -->
+    <!-- 食材のツリー構造も一緒にインデクス化する -->
+    <field name="ingredients_categories" type="string" indexed="true" stored="false" multiValued="true"/>
+    <field name="ingredients_name" type="string" indexed="true" stored="false" multiValued="true"/>
+    <field name="ingredients_kana" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+
+    <!-- seasonings -->
+    <field name="seasonings_name" type="string" indexed="true" stored="true" multiValued="true"/>
+    <field name="seasonings_kana" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+
+    <!-- chef -->
+    <!-- chef_name は 木村拓也 みたいな, sei mei があわさったやつ  -->
+    <field name="chef_name"            type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_name_facet"      type="string"  indexed="true" stored="true"/>
+    <!-- chef_kana は きむらたくや みたいな, sei mei があわさったやつ  -->
+    <field name="chef_kana"            type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_type"            type="string"  indexed="true" stored="false"/>
+    <field name="chef_popularity"      type="int"     indexed="true" stored="true"/>
+    <field name="chef_description"     type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_restaurant"      type="string"  indexed="true" stored="false"/>
+    <field name="chef_restaurant_kana" type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_genre"           type="string"  indexed="true" stored="false"/>
+
+    <!-- 全文検索用 -->
+    <field name="text" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+
+    <field name="_version_"   type="long"    indexed="true" stored="true"/>
+  </fields>
+
+  <uniqueKey>recipe_id</uniqueKey>
+
+  <!-- chef 名のファセット -->
+  <copyField source="chef_name" dest="chef_name_facet"/>
+
+  <!-- 全文検索用のをすべて詰め込む -->
+  <copyField source="recipe_name" dest="text"/>
+  <copyField source="recipe_kana" dest="text"/>
+  <copyField source="recipe_description" dest="text"/>
+  <copyField source="recipe_flow" dest="text"/>
+  <copyField source="ingredients_categories" dest="text"/>
+  <copyField source="ingredients_name" dest="text"/>
+  <copyField source="ingredients_kana" dest="text"/>
+  <copyField source="genres_categories" dest="text"/>
+  <copyField source="recipe_genre_name" dest="text"/>
+  <copyField source="recipe_genre_kana" dest="text"/>
+  <copyField source="seasonings_name" dest="text"/>
+  <copyField source="seasonings_kana" dest="text"/>
+  <copyField source="chef_name" dest="text"/>
+  <copyField source="chef_kana" dest="text"/>
+  <copyField source="chef_description" dest="text"/>
+  <copyField source="chef_restaurant" dest="text"/>
+  <copyField source="chef_restaurant_kana" dest="text"/>
+
+
+
+  <types>
+    <fieldType name="string" class="solr.StrField" sortMissingLast="true"/>
+    <fieldType name="boolean" class="solr.BoolField" sortMissingLast="true"/>
+    <fieldType name="int" class="solr.TrieIntField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="float" class="solr.TrieFloatField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="long" class="solr.TrieLongField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="double" class="solr.TrieDoubleField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="tint" class="solr.TrieIntField" precisionStep="8" positionIncrementGap="0"/>
+    <fieldType name="tfloat" class="solr.TrieFloatField" precisionStep="8" positionIncrementGap="0"/>
+    <fieldType name="tlong" class="solr.TrieLongField" precisionStep="8" positionIncrementGap="0"/>
+    <fieldType name="tdouble" class="solr.TrieDoubleField" precisionStep="8" positionIncrementGap="0"/>
+
+    <fieldType name="date" class="solr.TrieDateField" precisionStep="0" positionIncrementGap="0"/>
+    <fieldType name="tdate" class="solr.TrieDateField" precisionStep="6" positionIncrementGap="0"/>
+
+    <fieldType name="random" class="solr.RandomSortField" indexed="true"/>
+
+    <fieldType name="text_ws" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.WhitespaceTokenizerFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="text_ja" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+      <analyzer>
+        <tokenizer class="solr.JapaneseTokenizerFactory" mode="search"/>
+        <filter class="solr.JapaneseBaseFormFilterFactory"/>
+        <filter class="solr.JapanesePartOfSpeechStopFilterFactory" tags="lang/stoptags_ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.JapaneseKatakanaStemFilterFactory" minimumLength="4"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="text_uni_gram" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.NGramFilterFactory" minGramSize="1" maxGramSize="1"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="text_cjk" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.StandardTokenizerFactory"/>
+        <!-- normalize width before bigram, as e.g. half-width dakuten combine  -->
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <!-- for any non-CJK -->
+        <filter class="solr.LowerCaseFilterFactory"/>
+        <filter class="solr.CJKBigramFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="text_bi_gram" class="solr.TextField" positionIncrementGap="100">
+      <analyzer>
+        <tokenizer class="solr.NGramTokenizerFactory" minGramSize="2" maxGramSize="2"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="point" class="solr.PointType" dimension="2" subFieldSuffix="_d"/>
+
+    <fieldType name="location" class="solr.LatLonType" subFieldSuffix="_coordinate"/>
+
+  </types>
+
+</schema>

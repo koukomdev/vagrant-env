@@ -1,4 +1,4 @@
-include_recipe 'vagrant_env::yum-repos'
+include_recipe 'remi-env::yum-repos'
 
 package "zsh" do
   action :install

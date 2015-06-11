@@ -14,7 +14,7 @@ Vagrant.configure("2") do |config|
   # doesn't already exist on the user's system.
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
 
-  config.vm.define :cent6 do |cent|
+  config.vm.define :remi-env do |cent|
     cent.vm.network :private_network, ip: "33.33.33.100"
     cent.vm.network :forwarded_port, host: 8080, guest: 8984
   end

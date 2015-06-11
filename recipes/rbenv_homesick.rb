@@ -1,5 +1,5 @@
-include_recipe 'vagrant_env::rbenv'
-include_recipe 'vagrant_env::git'
+include_recipe 'remi-env::rbenv'
+include_recipe 'remi-env::git'
 
 rbenv_gem "homesick" do
   ruby_version node[:rbenv][:version]

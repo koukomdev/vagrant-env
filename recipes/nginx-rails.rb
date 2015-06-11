@@ -1,4 +1,4 @@
-include_recipe 'vagrant_env::nginx'
+include_recipe 'remi-env::nginx'
 
 template "/etc/nginx/conf.d/default.conf" do
   source "nginx-rails/default.conf.erb"

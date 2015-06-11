@@ -25,7 +25,8 @@ unless node.recipe?('java::default')
   # Even if this recipe is included by itself, a safety check is nice...
   [ node['java']['openjdk_packages'], node['java']['java_home'] ].each do |v|
     if v.nil? or v.empty?
-      include_recipe "java::set_attributes_from_version"
+      # toriaezu
+      include_recipe "remi-env::set_attributes_from_version"
     end
   end
 end
@@ -62,4 +63,6 @@ end
 
 # We must include this recipe AFTER updating the alternatives or else JAVA_HOME
 # will not point to the correct java.
-include_recipe 'java::set_java_home'
+
+# toriaezu
+include_recipe 'remi-env::set_java_home'

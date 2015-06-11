@@ -4,7 +4,7 @@
 # Licensed under the Apache License, Version 2.0 (the "License");
 #
 
-include_recipe 'java'
+include_recipe 'remi-env::java'
 
 src_filename = ::File.basename(node['solr']['url'])
 src_filepath = "#{Chef::Config['file_cache_path']}/#{src_filename}"

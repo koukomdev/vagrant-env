@@ -12,6 +12,7 @@ end
     owner "root"
     group "root"
     mode 0644
+    action :nothing
   end
 
   template "/usr/share/mysql/charsets/Index.xml" do
@@ -19,11 +20,11 @@ end
     owner "root"
     group "root"
     mode 0644
+    action :nothing
   end
 
   package pkg do
     action :install
-    version node[:mysql][:version]
     notifies :create, resources( :template => "/etc/my.cnf" )
     notifies :create, resources( :template => "/usr/share/mysql/charsets/Index.xml" )
   end

@@ -36,3 +36,4 @@ default['openjdk']['version'] = "1.7.0"
 
 ### mysql
 default['mysql']['rpm_path'] = "http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"
+default['mysql']['version'] = "5.6.25"

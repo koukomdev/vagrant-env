@@ -18,5 +18,5 @@
 #
 
 default['vim']['extra_packages'] = []
-default['vim']['install_method'] = 'package'
+default["vim"]["install_method"] = "source"
 

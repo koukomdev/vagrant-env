@@ -17,6 +17,7 @@
     "recipe[remi-env::nginx-rails]",
     "recipe[remi-env::mysql-server]",
     "recipe[remi-env::image-magick]",
+    "recipe[remi-env::ghostscript]",
     "recipe[remi-env::redis]",
     "recipe[solr::solr]"
   ]

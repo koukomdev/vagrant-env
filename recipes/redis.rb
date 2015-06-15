@@ -1,5 +1,3 @@
-include_recipe 'remi-env::yum-repos'
-
 package "redis" do
   action :install
 end

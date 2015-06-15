@@ -18,9 +18,6 @@ default['vim']['source']['dependencies'] = default['vim']['source']['dependencie
 default['vim']['neobundle']['exec']  = "yes"
 default['vim']['neobundle']['repo']  = "https://github.com/Shougo/neobundle.vim"
 
-### vim-proc
-default['vim']['vimproc']['compile'] = "yes"
-
 ### git
 default['git']['prefix']  = "/usr/local"
 default['git']['version'] = "1.8.2.1"

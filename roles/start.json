@@ -9,7 +9,7 @@
     "recipe[remi-env::rbenv_homesick]",
     "recipe[remi-env::zsh]",
     "recipe[remi-env::screen]",
-    "recipe[remi-env::vim-proc]",
+    "recipe[remi-env::vim-neobundle]",
     "recipe[remi-env::lv]",
     "recipe[remi-env::tree]",
     "recipe[remi-env::rbenv_bundler]",

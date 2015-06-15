@@ -18,7 +18,6 @@
     "recipe[remi-env::mysql-server]",
     "recipe[remi-env::image-magick]",
     "recipe[remi-env::redis]",
-    "recipe[remi-env::prepare-solr]",
-    "recipe[remi-env::solr]"
+    "recipe[solr::solr]"
   ]
 }

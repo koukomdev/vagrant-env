@@ -1,10 +1,10 @@
-# Cookbook Name:: remi-env
+# Cookbook Name:: solr
 # Recipe:: solr
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 #
 
-include_recipe 'prepare-solr'
+include_recipe 'solr::default'
 
 # setting mysql connector
 cookbook_file "#{node[:solr][:install_dir]}/dist/mysql-connector-java-#{node[:solr][:"mysql-connector"][:version]}-bin.jar" do
@@ -29,7 +29,7 @@ cores.each do |core|
 
   # core.properties
   template "#{solr_data_dir}/#{core}/core.properties" do
-    source "solr-setup/cores/#{core}/core.properties"
+    source "cores/#{core}/core.properties"
     owner "root"
     group "root"
     mode 0644
@@ -37,7 +37,7 @@ cores.each do |core|
 
   # schema.xml
   template "#{solr_data_dir}/#{core}/conf/schema.xml" do
-    source "solr-setup/cores/#{core}/schema.xml"
+    source "cores/#{core}/schema.xml"
     owner "root"
     group "root"
     mode 0644
@@ -45,7 +45,7 @@ cores.each do |core|
 
   # solrconfig.xml
   template "#{solr_data_dir}/#{core}/conf/solrconfig.xml" do
-    source "solr-setup/cores/common/#{node[:solr][:replication][:solrconfig]}.xml"
+    source "cores/common/#{node[:solr][:replication][:solrconfig]}.xml"
     owner "root"
     group "root"
     mode 0644
@@ -60,7 +60,7 @@ cores.each do |core|
 
   # db-data-config.xml
   template "#{solr_data_dir}/#{core}/conf/db-data-config.xml" do
-    source "solr-setup/cores/#{core}/db-data-config.xml"
+    source "cores/#{core}/db-data-config.xml"
     owner "root"
     group "root"
     mode 0644
@@ -75,7 +75,7 @@ cores.each do |core|
 
   # empty elevate.xml
   template "#{solr_data_dir}/#{core}/conf/elevate.xml" do
-    source "solr-setup/elevate.xml"
+    source "elevate.xml"
     owner "root"
     group "root"
     mode 0644

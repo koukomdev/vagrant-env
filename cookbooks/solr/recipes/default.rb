@@ -1,5 +1,5 @@
-# Cookbook Name:: remi-env
-# Recipe:: prepare-solr
+# Cookbook Name:: solr
+# Recipe:: default
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 #

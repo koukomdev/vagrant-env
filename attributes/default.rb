@@ -33,3 +33,6 @@ default['homesick']['castle'] = "dot-files"
 
 ### openjdk
 default['openjdk']['version'] = "1.7.0"
+
+### mysql
+default['mysql']['rpm_path'] = "http://dev.mysql.com/get/mysql-community-release-el6-5.noarch.rpm"

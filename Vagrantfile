@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
 
   config.vm.define "remi-env" do |cent|
     cent.vm.network :private_network, ip: "33.33.33.100"
-    cent.vm.network :forwarded_port, host: 3000, guest: 3000
+    cent.vm.network :forwarded_port, host: 8080, guest: 8984
   end
 
   config.vm.define :backup do |backup|

@@ -4,9 +4,9 @@
         user="<%= @user %>" password="<%= @pass %>" />
     <document>
         <entity name="recipes" pk="id"
-            query="SELECT *, 1 AS popularity, UNIX_TIMESTAMP(created_at) as created_at_unix FROM recipes WHERE status = 1"
-            deltaQuery="SELECT id FROM recipes WHERE updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT')"
-            deltaImportQuery="SELECT *, 1 AS popularity, UNIX_TIMESTAMP(created_at) as created_at_unix FROM recipes WHERE status = 1 AND id = '${dataimporter.delta.id}'"
+            query="SELECT recipes.*, IFNULL(recipe_all_pvs.pv_count, 1) AS popularity, UNIX_TIMESTAMP(recipes.created_at) as created_at_unix FROM recipes LEFT JOIN recipe_all_pvs ON recipes.id = recipe_all_pvs.recipe_id WHERE recipes.status = 1"
+            deltaQuery="SELECT recipes.id FROM recipes LEFT JOIN recipe_all_pvs ON recipes.id = recipe_all_pvs.recipe_id WHERE recipes.updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT') OR recipe_all_pvs.updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT')"
+            deltaImportQuery="SELECT recipes.*, IFNULL(recipe_all_pvs.pv_count, 1) AS popularity, UNIX_TIMESTAMP(recipes.created_at) as created_at_unix FROM recipes LEFT JOIN recipe_all_pvs ON recipes.id = recipe_all_pvs.recipe_id WHERE recipes.status = 1 AND recipes.id = '${dataimporter.delta.id}'"
             deletedPkQuery="SELECT * FROM recipes WHERE status = 0">
 
             <field column="id" name="recipe_id" />
@@ -20,13 +20,15 @@
             <field column="created_at_unix" name="recipe_timestamp" />
 
             <entity name="chefs" pk="id"
-                query="SELECT CONCAT(sei, ' ', mei) as fullname, CONCAT(sei_kana, ' ', mei_kana) as fullname_kana, description, restaurant, restaurant_kana FROM chefs WHERE id = '${recipes.chef_id}'"
+                query="SELECT sei_kana, mei_kana, CONCAT(sei, ' ', mei) as fullname, CONCAT(sei_kana, ' ', mei_kana) as fullname_kana, description, restaurant, restaurant_kana FROM chefs WHERE id = '${recipes.chef_id}'"
                 deltaQuery="SELECT id FROM chefs WHERE updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT')"
-                deltaImportQuery="SELECT CONCAT(sei, ' ', mei) as fullname, CONCAT(sei_kana, ' ', mei_kana) as fullname_kana, description, restaurant, restaurant_kana FROM chefs WHERE id = '${dataimporter.delta.id}'"
+                deltaImportQuery="SELECT sei_kana, mei_kana, CONCAT(sei, ' ', mei) as fullname, CONCAT(sei_kana, ' ', mei_kana) as fullname_kana, description, restaurant, restaurant_kana FROM chefs WHERE id = '${dataimporter.delta.id}'"
                 parentDeltaQuery="SELECT id FROM recipes WHERE recipes.chef_id = '${chefs.id}'">
 
                 <field column="fullname" name="chef_name" />
                 <field column="fullname_kana" name="chef_kana" />
+                <field column="sei_kana" name="chef_sei_kana" />
+                <field column="mei_kana" name="chef_mei_kana" />
                 <field column="description" name="chef_description" />
                 <field column="restaurant" name="chef_restaurant" />
                 <field column="restaurant_kana" name="chef_restaurant_kana" />
@@ -63,23 +65,6 @@
                     <field column="search_category_3" name="ingredients_categories" />
                     <field column="search_category_4" name="ingredients_categories" />
                     <field column="search_category_5" name="ingredients_categories" />
-                </entity>
-            </entity>
-
-            <entity name="recipes_seasonings" pk="id"
-                query="SELECT * FROM recipes_seasonings WHERE recipe_id = '${recipes.id}'"
-                deltaQuery="SELECT id FROM recipes_seasonings WHERE updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT')"
-                deltaImportQuery="SELECT * FROM recipes_seasonings WHERE id = '${dataimporter.delta.id}'"
-                parentDeltaQuery="SELECT id FROM recipes WHERE id = '${recipes_seasonings.recipe_id}'">
-
-                <entity name="seasonings" pk="id"
-                    query="SELECT * FROM seasonings WHERE id = '${recipes_seasonings.seasoning_id}'"
-                    deltaQuery="SELECT id FROM seasonings WHERE updated_at >= CONVERT_TZ('${dataimporter.last_index_time}', 'Asia/Tokyo', 'GMT')"
-                    deltaImportQuery="SELECT * FROM seasonings WHERE id = '${dataimporter.delta.id}'"
-                    parentDeltaQuery="SELECT id FROM recipes_seasonings WHERE recipes_seasonings.seasoning_id = '${seasonings.id}'">
-
-                    <field column="name" name="seasonings_name" />
-                    <field column="kana" name="seasonings_kana" />
                 </entity>
             </entity>
 

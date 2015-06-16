@@ -4,7 +4,7 @@
     <!-- recipe -->
     <field name="recipe_id"          type="int"     indexed="true" stored="true" required="true"/>
     <field name="recipe_name"        type="text_ja" indexed="true" stored="true"/>
-    <field name="recipe_kana"        type="text_ja" indexed="true" stored="false"/>
+    <field name="recipe_kana"        type="string"  indexed="true" stored="false"/>
     <field name="recipe_description" type="text_ja" indexed="true" stored="true"/>
     <field name="recipe_flow"        type="text_ja" indexed="true" stored="false" multiValued="true"/>
     <field name="recipe_difficulty"  type="int"     indexed="true" stored="true"/>
@@ -17,18 +17,14 @@
     <!-- ジャンルのツリー構造も一緒にインデクス化する -->
     <field name="genres_categories" type="string" indexed="true" stored="false" multiValued="true"/>
     <!-- leaf の名前(和食、とかの根っこ) -->
-    <field name="recipe_genre_name" type="string"  indexed="true" stored="false"  multiValued="true"/>
-    <field name="recipe_genre_kana" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+    <field name="recipe_genre_name" type="text_ja"  indexed="true" stored="false"  multiValued="true"/>
+    <field name="recipe_genre_kana" type="string" indexed="true" stored="false" multiValued="true"/>
 
     <!-- ingredients -->
     <!-- 食材のツリー構造も一緒にインデクス化する -->
     <field name="ingredients_categories" type="string" indexed="true" stored="false" multiValued="true"/>
-    <field name="ingredients_name" type="string" indexed="true" stored="false" multiValued="true"/>
-    <field name="ingredients_kana" type="text_ja" indexed="true" stored="false" multiValued="true"/>
-
-    <!-- seasonings -->
-    <field name="seasonings_name" type="string" indexed="true" stored="true" multiValued="true"/>
-    <field name="seasonings_kana" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+    <field name="ingredients_name" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+    <field name="ingredients_kana" type="string" indexed="true" stored="false" multiValued="true"/>
 
     <!-- chef -->
     <!-- chef_name は 木村拓也 みたいな, sei mei があわさったやつ  -->
@@ -36,17 +32,26 @@
     <field name="chef_name_facet"      type="string"  indexed="true" stored="true"/>
     <!-- chef_kana は きむらたくや みたいな, sei mei があわさったやつ  -->
     <field name="chef_kana"            type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_sei_kana"        type="string"  indexed="true" stored="false"/>
+    <field name="chef_mei_kana"        type="string"  indexed="true" stored="false"/>
     <field name="chef_type"            type="string"  indexed="true" stored="false"/>
     <field name="chef_popularity"      type="int"     indexed="true" stored="true"/>
     <field name="chef_description"     type="text_ja" indexed="true" stored="false"/>
-    <field name="chef_restaurant"      type="string"  indexed="true" stored="false"/>
-    <field name="chef_restaurant_kana" type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_restaurant"      type="text_ja" indexed="true" stored="false"/>
+    <field name="chef_restaurant_kana" type="string"  indexed="true" stored="false"/>
     <field name="chef_genre"           type="string"  indexed="true" stored="false"/>
 
-    <!-- 全文検索用 -->
+    <!-- 形態素解析用 -->
     <field name="text" type="text_ja" indexed="true" stored="false" multiValued="true"/>
+    <!-- 全体一致検索用 -->
+    <field name="string_field" type="string" indexed="true" stored="false" multiValued="true"/>
+    <!-- かな検索用 -->
+    <field name="text_kana" type="text_ja_kana" indexed="true" stored="false" multiValued="true"/>
 
     <field name="_version_"   type="long"    indexed="true" stored="true"/>
+
+    <!-- randomソート用 -->
+    <dynamicField name="random*" type="random" indexed="true" stored="false"/>
   </fields>
 
   <uniqueKey>recipe_id</uniqueKey>
@@ -54,25 +59,39 @@
   <!-- chef 名のファセット -->
   <copyField source="chef_name" dest="chef_name_facet"/>
 
-  <!-- 全文検索用のをすべて詰め込む -->
+  <!-- 形態素解析用 -->
   <copyField source="recipe_name" dest="text"/>
-  <copyField source="recipe_kana" dest="text"/>
   <copyField source="recipe_description" dest="text"/>
   <copyField source="recipe_flow" dest="text"/>
   <copyField source="ingredients_categories" dest="text"/>
   <copyField source="ingredients_name" dest="text"/>
-  <copyField source="ingredients_kana" dest="text"/>
   <copyField source="genres_categories" dest="text"/>
   <copyField source="recipe_genre_name" dest="text"/>
-  <copyField source="recipe_genre_kana" dest="text"/>
-  <copyField source="seasonings_name" dest="text"/>
-  <copyField source="seasonings_kana" dest="text"/>
   <copyField source="chef_name" dest="text"/>
-  <copyField source="chef_kana" dest="text"/>
   <copyField source="chef_description" dest="text"/>
   <copyField source="chef_restaurant" dest="text"/>
-  <copyField source="chef_restaurant_kana" dest="text"/>
 
+  <!-- 全体一致検索用 -->
+  <copyField source="recipe_name" dest="string_field"/>
+  <copyField source="recipe_kana" dest="string_field"/>
+  <copyField source="ingredients_categories" dest="string_field"/>
+  <copyField source="ingredients_name" dest="string_field"/>
+  <copyField source="ingredients_kana" dest="string_field"/>
+  <copyField source="genres_categories" dest="string_field"/>
+  <copyField source="recipe_genre_name" dest="string_field"/>
+  <copyField source="recipe_genre_kana" dest="string_field"/>
+  <copyField source="chef_name" dest="string_field"/>
+  <copyField source="chef_kana" dest="string_field"/>
+  <copyField source="chef_sei_kana" dest="string_field"/>
+  <copyField source="chef_mei_kana" dest="string_field"/>
+  <copyField source="chef_restaurant" dest="string_field"/>
+  <copyField source="chef_restaurant_kana" dest="string_field"/>
+
+  <!-- かな検索用 -->
+  <copyField source="recipe_name" dest="text_kana"/>
+  <copyField source="ingredients_name" dest="text_kana"/>
+  <copyField source="chef_name" dest="text_kana"/>
+  <copyField source="chef_restaurant" dest="text_kana"/>
 
 
   <types>
@@ -105,6 +124,21 @@
         <filter class="solr.JapanesePartOfSpeechStopFilterFactory" tags="lang/stoptags_ja.txt" enablePositionIncrements="true"/>
         <filter class="solr.CJKWidthFilterFactory"/>
         <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.JapaneseKatakanaStemFilterFactory" minimumLength="4"/>
+        <filter class="solr.LowerCaseFilterFactory"/>
+      </analyzer>
+    </fieldType>
+
+    <fieldType name="text_ja_kana" class="solr.TextField" positionIncrementGap="100" autoGeneratePhraseQueries="false">
+      <analyzer>
+        <!-- 食材名などを入れたカスタム辞書を使って「かな」に変換
+             シノニム辞書がないので「かな」でのみ使用した方が安全 -->
+        <tokenizer class="solr.JapaneseTokenizerFactory" mode="search" userDictionary="lang/userdict_ja.txt"/>
+        <filter class="solr.JapaneseBaseFormFilterFactory"/>
+        <filter class="solr.JapanesePartOfSpeechStopFilterFactory" tags="lang/stoptags_ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.CJKWidthFilterFactory"/>
+        <filter class="solr.StopFilterFactory" ignoreCase="true" words="lang/stopwords_ja.txt" enablePositionIncrements="true"/>
+        <filter class="solr.JapaneseReadingFormFilterFactory" useRomaji="false"/>
         <filter class="solr.JapaneseKatakanaStemFilterFactory" minimumLength="4"/>
         <filter class="solr.LowerCaseFilterFactory"/>
       </analyzer>

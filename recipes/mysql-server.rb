@@ -1,7 +1,7 @@
 bash 'add mysql community' do
   user 'root'
   code <<-EOC
-    rpm -ivh #{node[:mysql][:rpm_path]}
+    rpm -q mysql-community-release || rpm -ivh #{node[:mysql][:rpm_path]}
   EOC
 end
 

@@ -15,12 +15,12 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
 
   config.vm.define "remi-env" do |cent|
-    cent.vm.network :private_network, ip: "33.33.33.100"
+    cent.vm.network :private_network, ip: "192.168.50.100"
     cent.vm.network :forwarded_port, host: 8080, guest: 8984
   end
 
   config.vm.define :backup do |backup|
-    backup.vm.network :private_network, ip: "33.33.33.110"
+    backup.vm.network :private_network, ip: "192.168.50.110"
   end
 
   # Assign this VM to a host-only network IP, allowing you to access it

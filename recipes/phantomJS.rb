@@ -17,7 +17,7 @@ end
 
 bash "japanese_correspondence_phantomJS" do
   code <<-EOC
-    sudo yum groupinstall "Japanese Support"
+    sudo yum -y groupinstall "Japanese Support"
   EOC
 end
 
@@ -31,7 +31,7 @@ end
 
 # centosの言語設定をusにしてwebfontを読めるようにする
 template "/etc/sysconfig/i18n" do
-  source "sysconfig/i18"
+  source "sysconfig/i18n"
   owner "root"
   group "root"
   mode 0644

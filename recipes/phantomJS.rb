@@ -1,5 +1,4 @@
 bash "download_phantomJS" do
-  owner "root"
   code <<-EOC
     cd /usr/local/src
     wget https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-1.9.8-linux-x86_64.tar.bz2 -O phantomjs-1.9.8-linux-x86_64.tar.bz2
@@ -10,7 +9,6 @@ bash "download_phantomJS" do
 end
 
 bash "alias_phantomJS" do
-  owner "root"
   code <<-EOC
     cd /usr/local/src/phantomjs
     ln -sf `pwd`/bin/phantomjs /usr/local/bin/phantomjs
@@ -18,9 +16,8 @@ bash "alias_phantomJS" do
 end
 
 bash "japanese_correspondence_phantomJS" do
-  owner "root"
   code <<-EOC
-    yum groupinstall "Japanese Support"
+    sudo yum groupinstall "Japanese Support"
   EOC
 end
 

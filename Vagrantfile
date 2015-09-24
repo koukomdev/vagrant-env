@@ -15,19 +15,19 @@ Vagrant.configure("2") do |config|
   config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
 
   config.vm.define "remi-env" do |cent|
+    cent.vm.hostname = "localhost"
     cent.vm.network :private_network, ip: "33.33.33.100"
     cent.vm.network :forwarded_port, host: 8080, guest: 8984
   end
 
   config.vm.define :backup do |backup|
-    backup.vm.network :private_network, ip: "33.33.33.110"
+    backup.vm.network :private_network, ip: "192.168.50.110"
   end
 
   # Assign this VM to a host-only network IP, allowing you to access it
   # via the IP. Host-only networks can talk to the host machine as well as
   # any other machines on the same network, but cannot be accessed (through this
   # network interface) by any external networks.
-  #config.vm.network :private_network, ip: "33.33.33.10"
 
   # Create a public network, which generally matched to bridged network.
   # Bridged networks make the machine appear as another physical device on
@@ -49,13 +49,12 @@ Vagrant.configure("2") do |config|
   # backing providers for Vagrant. These expose provider-specific options.
   # Example for VirtualBox:
   #
-  # config.vm.provider :virtualbox do |vb|
-  #   # Don't boot with headless mode
-  #   vb.gui = true
-  #
-  #   # Use VBoxManage to customize the VM. For example to change memory:
-  #   vb.customize ["modifyvm", :id, "--memory", "1024"]
-  # end
+  config.vm.provider :virtualbox do |vb|
+    # Don't boot with headless mode
+    #vb.gui = true
+    # Use VBoxManage to customize the VM. For example to change memory:
+    vb.customize ["modifyvm", :id, "--memory", "1024"]
+  end
   #
   # View the documentation for the provider you're using for more
   # information on available options.

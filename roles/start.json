@@ -19,6 +19,8 @@
     "recipe[remi-env::image-magick]",
     "recipe[remi-env::ghostscript]",
     "recipe[remi-env::redis]",
+    "recipe[remi-env::phantomJS]",
+    "recipe[remi-env::qt]",
     "recipe[solr::solr]"
   ]
 }

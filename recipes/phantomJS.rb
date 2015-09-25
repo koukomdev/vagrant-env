@@ -29,6 +29,12 @@ template "/etc/fonts/fonts.conf" do
   mode 0644
 end
 
+bash "refresh font chache" do
+  code <<-EOC
+    sudo fc-cache -fv
+  EOC
+end
+
 # centosの言語設定をusにしてwebfontを読めるようにする
 template "/etc/sysconfig/i18n" do
   source "sysconfig/i18n"

@@ -1,3 +1,9 @@
+bash "install_qt-devel" do
+  code <<-EOC
+    sudo yum -y install qt-devel
+  EOC
+end
+
 template "/etc/yum.repos.d/qt.repo" do
   source "qt/qt.repo"
   owner "root"

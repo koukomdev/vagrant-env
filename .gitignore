@@ -10,8 +10,6 @@
 /tmp/
 vendor/
 .vagrant/
-Berksfile.lock
-Gemfile.lock
  
 ## Specific to RubyMotion:
 .dat*

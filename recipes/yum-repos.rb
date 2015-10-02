@@ -3,7 +3,6 @@
 # CA証明書が古すぎてepelへの接続に失敗していたので更新する
 package "ca-certificates" do
   action :upgrade
-  #options "--disablerepo=epel"
 end
 
 include_recipe "yum-epel"

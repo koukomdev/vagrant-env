@@ -21,6 +21,15 @@ bash "alias_qt48-qt-webkit-devel" do
   code <<-EOC
     sudo ln -s /opt/rh/qt48/root/usr/include/QtCore/qconfig-64.h  /opt/rh/qt48/root/usr/include/QtCore/qconfig-x86_64.h
     source /opt/rh/qt48/enable
-    export PATH=/opt/rh/qt48/root/usr/lib64/qt4/bin/${PATH:+:${PATH}}
   EOC
+end
+
+file "/etc/profile.d/qt.sh" do
+  owner "root"
+  group "root"
+  mode "644"
+  action :create
+  content <<-EOS
+    export PATH=/opt/rh/qt48/root/usr/lib64/qt4/bin/${PATH:+:${PATH}}
+  EOS
 end

@@ -8,7 +8,7 @@ directory "#{default_user['home']}/.vim" do
   action :create
 end
 
-git "#{default_user['home']}/.vim/neobundle.vim.git" do
+git "#{default_user['home']}/.vim/bundle/neobundle.vim" do
   repository node[:vim][:neobundle][:repo]
   action :sync
 end

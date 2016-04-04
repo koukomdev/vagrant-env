@@ -1,4 +1,4 @@
-include_recipe 'remi-env::rbenv'
+include_recipe 'vagrant-env::rbenv'
 
 ruby_block "resolv.conf" do
   block do

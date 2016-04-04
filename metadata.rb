@@ -1,9 +1,9 @@
-name             'remi-env'
+name             'vagrant-env'
 maintainer       'koji komiya'
 maintainer_email 'koukomdev@gmail.com'
 license          'All rights reserved'
-description      'Installs/Configures remi-env'
-long_description 'Installs/Configures remi-env'
+description      'Installs/Configures vagrant-env'
+long_description 'Installs/Configures vagrant-env'
 version          '0.1.0'
 
 depends "yum"

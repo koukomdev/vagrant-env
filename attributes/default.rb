@@ -13,8 +13,9 @@ default['vim']['neobundle']['exec']  = "yes"
 default['vim']['neobundle']['repo']  = "https://github.com/Shougo/neobundle.vim"
 
 ### git
-default['git']['prefix']  = "/usr/local"
-default['git']['version'] = "1.8.2.1"
+default['git']['prefix']   = "/usr/local"
+default['git']['version']  = "2.6.4"
+default['git']['checksum'] = "08e3ccdba87ca55140c8155a07e147f6c1cdd7b574690e960763b18474fd05ed"
 
 ### zsh
 default['zsh']['chsh'] = "yes"

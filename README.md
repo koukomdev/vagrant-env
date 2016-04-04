@@ -1,4 +1,4 @@
-remi-env  
+vagrant-env  
 ===========  
 
 prepare vagrant environment  
@@ -12,8 +12,8 @@ vm内で作業予定が無いならrm recipes/rbenv_homesick.rbして頂ける�
 
 $ bundle --path vendor/bundle  
 $ bundle exec berks install  
-$ vagrant up remi-env  
-$ vagrant ssh-config remi-env --host remi-env >> ~/.ssh/config  
-$ bundle exec knife solo prepare remi-env  
-$ bundle exec knife solo cook remi-env  
-$ vagrant ssh remi-env  
+$ vagrant up vagrant-env  
+$ vagrant ssh-config vagrant-env --host vagrant-env >> ~/.ssh/config  
+$ bundle exec knife solo prepare vagrant-env  
+$ bundle exec knife solo cook vagrant-env  
+$ vagrant ssh vagrant-env  

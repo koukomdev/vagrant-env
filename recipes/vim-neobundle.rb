@@ -1,4 +1,4 @@
-include_recipe 'remi-env::vim'
+include_recipe 'vagrant-env::vim'
 
 default_user = data_bag_item("users", "default")
 

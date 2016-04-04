@@ -18,5 +18,5 @@
 # limitations under the License.
 #
 
-include_recipe "remi-env::set_attributes_from_version"
-include_recipe "remi-env::#{node['java']['install_flavor']}"
+include_recipe "vagrant-env::set_attributes_from_version"
+include_recipe "vagrant-env::#{node['java']['install_flavor']}"

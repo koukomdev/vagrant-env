@@ -3,7 +3,6 @@ vagrant-env
 
 prepare vagrant environment  
 
-料理サプリ開発環境を構築する  
 bundle vagrantは必要  
 
 attributes/default.rb内でhomesickについて指定しています  

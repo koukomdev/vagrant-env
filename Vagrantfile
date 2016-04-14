@@ -8,11 +8,11 @@ Vagrant.configure("2") do |config|
   config.vm.hostname = "vagrant-guest"
 
   # Every Vagrant virtual environment requires a box to build off of.
-  config.vm.box = "CentOS-6.4-x86_64-v20130731"
+  config.vm.box = "centos-7.0-x86_64"
 
   # The url from where the 'config.vm.box' box will be fetched if it
   # doesn't already exist on the user's system.
-  config.vm.box_url = "http://developer.nrel.gov/downloads/vagrant-boxes/CentOS-6.4-x86_64-v20130731.box"
+  config.vm.box_url = "https://github.com/tommy-muehle/puppet-vagrant-boxes/releases/download/1.1.0/centos-7.0-x86_64.box"
 
   config.vm.define "vagrant-env" do |cent|
     cent.vm.network :private_network, ip: "192.168.50.100"
